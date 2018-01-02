@@ -20,5 +20,8 @@
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc1",
     "q": "^1.5.1"
+  },
+  "devDependencies": {
+    "generate-schema": "^2.6.0"
   }
 }

@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/accounts', {
 });
 
 let db = mongoose.connection,
-	Account = mongoose.model('account', mongoose.Schema({
+	Account = db.model('account', mongoose.Schema({
 		"name": {
 			"type": "String"
 		},

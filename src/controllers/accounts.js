@@ -1,4 +1,4 @@
-const accountsSvc = require('../service/accounts');
+const accountsSvc = require('../services/accounts');
 
 module.exports = {
 	GET: (req, res) => {

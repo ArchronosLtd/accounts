@@ -6,6 +6,6 @@ var jsonObject = {
 	"amountRemaining": 19297.0
 }
 var GenerateSchema = require('generate-schema')
-var schema = GenerateSchema.json('Account', jsonObject);
+var schema = GenerateSchema.mongoose(jsonObject);
 
 console.log(JSON.stringify(schema));

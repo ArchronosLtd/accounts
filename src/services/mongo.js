@@ -33,7 +33,7 @@ module.exports = {
 	getAccounts: () => {
 		let def = q.defer();
 
-		Account.collection.find({}, (err, accounts) => {
+		Account.find({}, (err, accounts) => {
 			if (err) {
 				console.error(err);
 				def.reject(err);

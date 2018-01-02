@@ -1,7 +1,7 @@
 const q = require('q'),
 	mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/accounts', {
+mongoose.connect('mongodb://localhost:27017/accounts', {
 	useMongoClient: true
 });
 

@@ -6,12 +6,6 @@ mongoose.connect('mongodb://localhost:27017/accounts', {
 });
 
 let db = mongoose.connection,
-	Account;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-	console.log('mongo connected');
-
 	Account = mongoose.model('account', mongoose.Schema({
 		"name": {
 			"type": "String"
@@ -29,13 +23,17 @@ db.once('open', function() {
 			"type": "Number"
 		}
 	}));
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+	console.log('mongo connected');
 });
 
 module.exports = {
 	getAccounts: () => {
 		let def = q.defer();
 
-		Account.find((err, accounts) => {
+		Account.find({}, (err, accounts) => {
 			if (err) {
 				console.error(err);
 				def.reject(err);

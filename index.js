@@ -1,8 +1,16 @@
 'use strict';
-const express = require('express');
 
-let app = express();
+const accounts = require('./accounts'),
+	transactions = require('./transaction');
 
-app.listen(8080, () => {
-    require('./src/controllers').init(app);
-});
+module.exports = {
+	init: (app) => {
+		app.get('/', (req, res) => {
+			res.send('Accounts sytstem').status(200).end();
+		});
+
+		app.get('/accounts', accounts.GET);
+
+		app.post('/transaction', transactions.POST);
+	}
+}

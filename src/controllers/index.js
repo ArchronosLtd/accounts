@@ -11,6 +11,7 @@ module.exports = {
 
 		app.get('/accounts', accounts.GET);
 
-		app.post('/transaction/:id', transactions.POST);
+		app.post('/transaction', transactions.POST);
+		app.patch('/transaction/:id', transactions.PATCH);
 	}
 }

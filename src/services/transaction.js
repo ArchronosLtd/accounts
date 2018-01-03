@@ -6,18 +6,17 @@ module.exports = {
 		return mongoSvc.storeTransaction(transaction).then((transaction) => {
 			mongoSvc.getAccounts({
 				_id: transaction.account
-			}).then((account) => {
-				console.log(account);
+			}).then((accounts) => {
+				let account = accounts[0];
 
 				account.amountPending += transaction.amount;
 
 				account.save((err, account) => {
 					if (err) {
 						console.error(err);
-						def.reject(err);
 					}
 
-					def.resolve(transaction);
+					console.log(account);
 				});
 			});
 
@@ -32,7 +31,9 @@ module.exports = {
 				// update the account here
 				mongoSvc.getAccounts({
 					_id: transaction.account
-				}).then((account) => {
+				}).then((accounts) => {
+					let account = accounts[0];
+
 					account.amountPaid += transaction.amount;
 					account.amountRemaining -= transaction.amount;
 					account.amountPending -= transaction.amount;

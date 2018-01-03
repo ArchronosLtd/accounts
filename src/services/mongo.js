@@ -76,5 +76,29 @@ module.exports = {
 		});
 
 		return def.promise;
+	},
+	patchTransaction: (id, status) => {
+		let def = q.defer();
+
+		Transaction.findById(id, (err, transaction) => {
+			if (err) {
+				console.error(err);
+				def.reject(err);
+				return;
+			}
+
+			transaction.status = status;
+			transaction.save((err, transaction) => {
+				if (err) {
+					console.error(err);
+					def.reject(err);
+					return;
+				}
+
+				def.resolve(transaction);
+			});
+		});
+
+		return def.promise;
 	}
 }

@@ -1,4 +1,5 @@
-const accountsSvc = require('../services/accounts');
+const accountsSvc = require('../services/accounts'),
+	transactionSvc = require('../services/transaction');
 
 module.exports = {
 	GET: (req, res) => {
@@ -9,5 +10,8 @@ module.exports = {
 		}).catch((err) => {
 			res.send(err).status(500).end();
 		});
+	},
+	PATCH: (req, res) => {
+		transactionSvc.save()
 	}
 }

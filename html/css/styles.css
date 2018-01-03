@@ -1,0 +1,22 @@
+body {
+	display: flex;
+	height: 100vh;
+}
+
+.nav,
+.content {
+	padding: 15px;
+}
+
+.nav {
+	width: 20%;
+	background: #3a3a3c;
+
+	color: #dc4b4f;
+
+	flex: 1 20%;
+}
+
+.content {
+	flex: 1 80%;
+}

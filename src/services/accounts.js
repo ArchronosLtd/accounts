@@ -1,7 +1,7 @@
 const mongoSvc = require('./mongo');
 
 module.exports = {
-	get: () => {
-		return mongoSvc.getAccounts();
+	get: (query) => {
+		return mongoSvc.getAccounts(query);
 	}
 }

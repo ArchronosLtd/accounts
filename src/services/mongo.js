@@ -50,8 +50,6 @@ module.exports = {
 	getAccounts: (query) => {
 		let def = q.defer();
 
-		console.log(query);
-
 		Account.find(query || {}, (err, accounts) => {
 			if (err) {
 				console.error(err);

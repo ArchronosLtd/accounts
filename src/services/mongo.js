@@ -44,10 +44,12 @@ db.once('open', function() {
 });
 
 module.exports = {
-	getAccounts: () => {
+	getAccounts: (query) => {
 		let def = q.defer();
 
-		Account.find({}, (err, accounts) => {
+		console.log(query);
+
+		Account.find(query || {}, (err, accounts) => {
 			if (err) {
 				console.error(err);
 				def.reject(err);
@@ -82,6 +84,8 @@ module.exports = {
 	},
 	patchTransaction: (id, status) => {
 		let def = q.defer();
+
+		console.log(id);
 
 		Transaction.findById(id, (err, transaction) => {
 			if (err) {

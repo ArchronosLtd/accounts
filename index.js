@@ -1,16 +1,11 @@
 'use strict';
+const express = require('express'),
+	bodyParser = require('body-parser');
 
-const accounts = require('./accounts'),
-	transactions = require('./transaction');
+let app = express();
 
-module.exports = {
-	init: (app) => {
-		app.get('/', (req, res) => {
-			res.send('Accounts sytstem').status(200).end();
-		});
+app.use(bodyParser.json());
 
-		app.get('/accounts', accounts.GET);
-
-		app.post('/transaction', transactions.POST);
-	}
-}
+app.listen(8080, () => {
+	require('./src/controllers').init(app);
+});

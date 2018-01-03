@@ -65,6 +65,7 @@ module.exports = {
 	storeTransaction: (transaction) => {
 		let def = q.defer(),
 			dbTransaction = new Transaction({
+				account: transaction.account,
 				date: new Date(transaction.date),
 				amount: transaction.amount,
 				status: transaction.status || 'PENDING'

@@ -26,7 +26,7 @@ module.exports = {
 	patch: (id, status) => {
 		let def = q.defer();
 
-		mongoSvc.patchTransaction(id, status).then((transaction) => {
+		mongoSvc.patchTransaction(id, status, comments).then((transaction) => {
 			if (status === 'APPROVED') {
 				// update the account here
 				mongoSvc.getAccounts({
@@ -48,7 +48,22 @@ module.exports = {
 					});
 				});
 			} else {
-				def.resolve(transaction);
+				mongoSvc.getAccounts({
+					_id: transaction.account
+				}).then((accounts) => {
+					let account = accounts[0];
+
+					account.amountPending -= transaction.amount;
+
+					account.save((err, account) => {
+						if (err) {
+							console.error(err);
+							def.reject(err);
+						}
+
+						def.resolve(transaction);
+					});
+				});
 			}
 		});
 

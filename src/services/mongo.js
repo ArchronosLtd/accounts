@@ -22,6 +22,17 @@ let db = mongoose.connection,
 		"amountRemaining": {
 			"type": "Number"
 		}
+	})),
+	Transaction = db.model('transaction', mongoose.Schema({
+		"date": {
+			"type": "Date"
+		},
+		"amount": {
+			"type": "Number"
+		},
+		"status": {
+			"type": "String"
+		}
 	}));
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -41,6 +52,27 @@ module.exports = {
 			}
 
 			def.resolve(accounts);
+		});
+
+		return def.promise;
+	},
+
+	storeTransaction: (transaction) => {
+		let def = q.defer(),
+			dbTransaction = new Transaction({
+				date: new Date(transaction.date),
+				amount: transaction.amount,
+				status: transaction.status || 'PENDING'
+			});
+
+		dbTransaction.save((err, transaction) => {
+			if (err) {
+				console.error(err);
+				def.reject(err);
+				return;
+			}
+
+			def.resolve(transaction);
 		});
 
 		return def.promise;

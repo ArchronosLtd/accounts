@@ -7,6 +7,8 @@ module.exports = {
 			mongoSvc.getAccounts({
 				_id: transaction.account
 			}).then((account) => {
+				console.log(account);
+
 				account.amountPending += transaction.amount;
 
 				account.save((err, account) => {

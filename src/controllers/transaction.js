@@ -9,7 +9,7 @@ module.exports = {
 		});
 	},
 	PATCH: (req, res) => {
-		transactionSvc.patch(req.params.id, req.body.status).then((transaction) => {
+		transactionSvc.patch(req.params.id, req.body.status, req.body.comments || '').then((transaction) => {
 			res.send(transaction).status(200).end();
 		}).catch((err) => {
 			res.send(err).status(500).end();

@@ -24,6 +24,9 @@ let db = mongoose.connection,
 		}
 	})),
 	Transaction = db.model('transaction', mongoose.Schema({
+		"account": {
+			"type": "ObjectId"
+		},
 		"date": {
 			"type": "Date"
 		},

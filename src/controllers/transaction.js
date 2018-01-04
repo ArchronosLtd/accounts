@@ -1,6 +1,11 @@
 const transactionSvc = require('../services/transaction');
 
 module.exports = {
+	GET: (req, res) => {
+		transactionSvc.getAll().then((transactions) => {
+			res.send(transactions).end();
+		});
+	},
 	POST: (req, res) => {
 		transactionSvc.save(req.body).then((transaction) => {
 			res.send(transaction).status(200).end();

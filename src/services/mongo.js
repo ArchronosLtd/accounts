@@ -63,6 +63,21 @@ module.exports = {
 		return def.promise;
 	},
 
+	getAllTransactions: () => {
+		let def = q.defer();
+
+		Transaction.find({}, (err, transactions) => {
+			if (err) {
+				console.error(err);
+				def.reject(err);
+				return;
+			}
+
+			def.resolve(transactions);
+		});
+
+		return def.promise;
+	},
 	storeTransaction: (transaction) => {
 		let def = q.defer(),
 			dbTransaction = new Transaction({

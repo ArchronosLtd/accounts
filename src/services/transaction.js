@@ -2,6 +2,9 @@ const q = require('q'),
 	mongoSvc = require('./mongo');
 
 module.exports = {
+	getAll: () => {
+		return mongoSvc.getAllTransactions();
+	},
 	save: (transaction) => {
 		return mongoSvc.storeTransaction(transaction).then((transaction) => {
 			mongoSvc.getAccounts({

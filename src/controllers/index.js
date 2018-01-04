@@ -10,8 +10,9 @@ module.exports = {
 		});
 
 		app.get('/accounts', accounts.GET);
-		app.get('/accounts/:id', accounts.GET_ONE);
+		app.get('/account/:id', accounts.GET_ONE);
 
+		app.get('/transactions', transactions.GET);
 		app.post('/transaction', transactions.POST);
 		app.patch('/transaction/:id', transactions.PATCH);
 	}

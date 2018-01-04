@@ -7,11 +7,19 @@
 		<link href="css/styles.css" rel="stylesheet">
 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+		<script src="js/debtor.js"></script>
 	</head>
 
 	<body>
 		<div class="nav">
 			<div class="container-fluid">
+				<div class="row">
+					<span class="col-sm-6">Remaining:</span> <span class="col-sm-6">&pound;<b id="remaining"></b></span>
+					<span class="col-sm-6">Pending:</span> <span class="col-sm-6">&pound;<b id="pending"></b></span>
+					<span class="col-sm-6">Paid:</span> <span class="col-sm-6">&pound;<b id="paid"></b></span>
+				</div>
+
 				<div class="row">
 					<button class="col-sm-12 btn btn-primary">Add expense</button>
 				</div>
@@ -21,17 +29,10 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
-					<h1>Who are you?</h1>
+					<h1>Transactions</h1>
 				</div>
 
 				<div class="row">
-					<div class="col-sm-4 col-md-3">
-						<button class="btn btn-primary">Steve &amp; Frances</button>
-					</div>
-
-					<div class="col-sm-4 col-md-3">
-						<button class="btn btn-primary">Chris &amp; Kevin</button>
-					</div>
 				</div>
 			</div>
 		</div>

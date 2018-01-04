@@ -66,7 +66,9 @@ module.exports = {
 	getAllTransactions: () => {
 		let def = q.defer();
 
-		Transaction.find({}, (err, transactions) => {
+		Transaction.find({}).sort({
+			date: 'desc'
+		}).exec((err, transactions) => {
 			if (err) {
 				console.error(err);
 				def.reject(err);

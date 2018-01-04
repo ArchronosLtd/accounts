@@ -36,7 +36,7 @@ let db = mongoose.connection,
 		"status": {
 			"type": "String"
 		},
-		"comments": {
+		"description": {
 			"type": "String"
 		}
 	}));

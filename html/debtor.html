@@ -14,7 +14,7 @@
 	<body>
 		<div class="nav">
 			<div class="container-fluid">
-				<div class="row">
+				<div class="row" id="summary">
 					<span class="col-sm-6">Remaining:</span> <span class="col-sm-6">&pound;<b id="remaining"></b></span>
 					<span class="col-sm-6">Pending:</span> <span class="col-sm-6">&pound;<b id="pending"></b></span>
 					<span class="col-sm-6">Paid:</span> <span class="col-sm-6">&pound;<b id="paid"></b></span>
@@ -32,7 +32,36 @@
 					<h1>Transactions</h1>
 				</div>
 
-				<div class="row">
+				<div id="transactions">
+					<div class="row">
+						<div class="col-sm-3">
+							Amount
+						</div>
+
+						<div class="col-sm-6">
+							Description
+						</div>
+
+						<div class="col-sm-3">
+							Status
+						</div>
+					</div>
+				</div>
+
+				<div id="transaction-example">
+					<div class="row transaction">
+						<div class="col-sm-3">
+							&pound;<span class="amount"></span>
+						</div>
+
+						<div class="col-sm-6">
+							Description
+						</div>
+
+						<div class="col-sm-3">
+							<span class="status"></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

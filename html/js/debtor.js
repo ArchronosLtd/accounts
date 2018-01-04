@@ -11,5 +11,27 @@ $(document).ready(function() {
 		});
 	}
 
+	function getTransactions() {
+		$.ajax({
+			url: '/api/transactions',
+			success: function(data) {
+				for (var i = 0; i < data.length; i++) {
+					var transaction = data[i];
+
+					// create the html
+					var dom = $('#transaction-example').clone();
+
+					dom.removeAttr('id');
+
+					dom.find('.amount').text(transaction.amount.toFixed(2));
+					dom.find('.status').addClass(transaction.status.toLowerCase()).text(transaction.status);
+
+					$('#transactions').append(dom);
+				}
+			}
+		});
+	}
+
 	updateSummary();
+	getTransactions();
 });

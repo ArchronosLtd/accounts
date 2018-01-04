@@ -20,3 +20,22 @@ body {
 .content {
 	flex: 1 80%;
 }
+
+#summary {
+	margin-bottom: 15px;
+}
+
+#transaction-example {
+	display: none;
+}
+
+.transaction {
+	margin-bottom: 5px;
+}
+
+.approved {
+	background: #4bb14b;
+	color: #fff;
+	display: block;
+	text-align: center;
+}

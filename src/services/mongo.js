@@ -36,8 +36,12 @@ let db = mongoose.connection,
 		"status": {
 			"type": "String"
 		},
-		"description": {
+		"comments": {
 			"type": "String"
+		},
+		"img": {
+			data: Buffer,
+			contentType: String
 		}
 	}));
 
@@ -49,6 +53,8 @@ db.once('open', function() {
 module.exports = {
 	getAccounts: (query) => {
 		let def = q.defer();
+
+		console.log(query);
 
 		Account.find(query || {}, (err, accounts) => {
 			if (err) {
@@ -63,24 +69,7 @@ module.exports = {
 		return def.promise;
 	},
 
-	getAllTransactions: () => {
-		let def = q.defer();
-
-		Transaction.find({}).sort({
-			date: 'desc'
-		}).exec((err, transactions) => {
-			if (err) {
-				console.error(err);
-				def.reject(err);
-				return;
-			}
-
-			def.resolve(transactions);
-		});
-
-		return def.promise;
-	},
-	storeTransaction: (transaction) => {
+	storeTransaction: (transaction, files) => {
 		let def = q.defer(),
 			dbTransaction = new Transaction({
 				account: transaction.account,
@@ -88,6 +77,9 @@ module.exports = {
 				amount: transaction.amount,
 				status: transaction.status || 'PENDING'
 			});
+
+		dbTransaction.img.data = fs.readFileSync(files.proof.path);
+		dbTransaction.img.contentType = `image/png`;
 
 		dbTransaction.save((err, transaction) => {
 			if (err) {

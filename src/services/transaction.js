@@ -2,11 +2,8 @@ const q = require('q'),
 	mongoSvc = require('./mongo');
 
 module.exports = {
-	getAll: () => {
-		return mongoSvc.getAllTransactions();
-	},
-	save: (transaction) => {
-		return mongoSvc.storeTransaction(transaction).then((transaction) => {
+	save: (transaction, files) => {
+		return mongoSvc.storeTransaction(transaction, files).then((transaction) => {
 			mongoSvc.getAccounts({
 				_id: transaction.account
 			}).then((accounts) => {

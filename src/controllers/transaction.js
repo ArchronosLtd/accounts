@@ -1,13 +1,8 @@
 const transactionSvc = require('../services/transaction');
 
 module.exports = {
-	GET: (req, res) => {
-		transactionSvc.getAll().then((transactions) => {
-			res.send(transactions).end();
-		});
-	},
 	POST: (req, res) => {
-		transactionSvc.save(req.body).then((transaction) => {
+		transactionSvc.save(req.body, req.files).then((transaction) => {
 			res.send(transaction).status(200).end();
 		}).catch((err) => {
 			res.send(err).status(500).end();

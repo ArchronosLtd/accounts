@@ -27,7 +27,31 @@ $(document).ready(function() {
 
 					dom.find('.amount').text(transaction.amount.toFixed(2));
 					dom.find('.description').text(transaction.description);
-					dom.find('.status').addClass(transaction.status.toLowerCase()).text(transaction.status);
+					dom.find('.status').addClass(transaction.status.toLowerCase()).children('span').text(transaction.status);
+					dom.find('input').val(transaction._id);
+
+					dom.find('.btn-success').click(function(e) {
+						var id = $(this).parent().parent().parent().find('input').val(),
+							formData = new FormData(),
+							xhr = new XMLHttpRequest();;
+
+						formData.append('status', 'APPROVED');
+						formData.append('comments', '');
+
+						xhr.open('PATCH', '/api/transaction/' + id, true);
+						xhr.onload = function() {
+							updateSummary();
+							getTransactions();
+						};
+
+						xhr.send(formData);
+					});
+
+					dom.find('.btn-primary').click(function(e) {
+						var id = $(this).parent().parent().find('input').val();
+
+						window.open('/api/image/' + id);
+					});
 
 					$('#transactions').append(dom);
 				}

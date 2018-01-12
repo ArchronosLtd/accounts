@@ -1,7 +1,8 @@
 const q = require('q'),
+	fs = require('fs'),
 	mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/accounts', {
+mongoose.connect('mongodb://debts:27017/accounts', {
 	useMongoClient: true
 });
 
@@ -36,7 +37,7 @@ let db = mongoose.connection,
 		"status": {
 			"type": "String"
 		},
-		"comments": {
+		"description": {
 			"type": "String"
 		},
 		"img": {
@@ -69,16 +70,32 @@ module.exports = {
 		return def.promise;
 	},
 
-	storeTransaction: (transaction, files) => {
+	fetchTransactions: (query) => {
+		let def = q.defer();
+
+		Transaction.find(query, (err, transactions) => {
+			if (err) {
+				console.error(err);
+				def.reject(err);
+				return;
+			}
+
+			def.resolve(transactions);
+		});
+
+		return def.promise;
+	},
+	storeTransaction: (transaction, file) => {
 		let def = q.defer(),
 			dbTransaction = new Transaction({
 				account: transaction.account,
 				date: new Date(transaction.date),
 				amount: transaction.amount,
-				status: transaction.status || 'PENDING'
+				status: transaction.status || 'PENDING',
+				description: transaction.description
 			});
 
-		dbTransaction.img.data = fs.readFileSync(files.proof.path);
+		dbTransaction.img.data = fs.readFileSync(file.path);
 		dbTransaction.img.contentType = `image/png`;
 
 		dbTransaction.save((err, transaction) => {
@@ -93,10 +110,8 @@ module.exports = {
 
 		return def.promise;
 	},
-	patchTransaction: (id, status) => {
+	patchTransaction: (id, status, comments) => {
 		let def = q.defer();
-
-		console.log(id);
 
 		Transaction.findById(id, (err, transaction) => {
 			if (err) {
@@ -105,7 +120,12 @@ module.exports = {
 				return;
 			}
 
+			console.log('transaction: ', transaction);
+
 			transaction.status = status;
+
+			console.log('transaction: ', transaction);
+
 			transaction.save((err, transaction) => {
 				if (err) {
 					console.error(err);
@@ -116,6 +136,22 @@ module.exports = {
 				def.resolve(transaction);
 			});
 		});
+
+		return def.promise;
+	},
+
+	getImage: (transactionId) => {
+		let def = q.defer();
+
+		Transaction.findById(transactionId, (err, transaction) => {
+			if (err) {
+				console.error(err);
+				def.reject(err);
+				return;
+			}
+
+			def.resolve(transaction.img);
+		})
 
 		return def.promise;
 	}

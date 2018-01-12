@@ -1,7 +1,8 @@
 'use strict';
 
 const accounts = require('./accounts'),
-	transactions = require('./transaction');
+	transactions = require('./transaction'),
+	image = require('./image');
 
 module.exports = {
 	init: (app) => {
@@ -10,8 +11,12 @@ module.exports = {
 		});
 
 		app.get('/accounts', accounts.GET);
+		app.get('/account/:id', accounts.GET_ONE);
 
+		app.get('/transactions/:id', transactions.GET);
 		app.post('/transaction', transactions.POST);
 		app.patch('/transaction/:id', transactions.PATCH);
+
+		app.get('/image/:transactionId', image.GET);
 	}
 }

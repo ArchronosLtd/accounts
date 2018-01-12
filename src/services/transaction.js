@@ -1,9 +1,17 @@
 const q = require('q'),
+	mailer = require('nodemailer'),
 	mongoSvc = require('./mongo');
 
 module.exports = {
-	save: (transaction, files) => {
-		return mongoSvc.storeTransaction(transaction, files).then((transaction) => {
+	fetch: (id) => {
+		return mongoSvc.fetchTransactions({
+			account: id
+		});
+	},
+	save: (transaction, file) => {
+		let def = q.defer();
+
+		mongoSvc.storeTransaction(transaction, file).then((transaction) => {
 			mongoSvc.getAccounts({
 				_id: transaction.account
 			}).then((accounts) => {
@@ -16,17 +24,21 @@ module.exports = {
 						console.error(err);
 					}
 
-					console.log(account);
+					def.resolve(transaction);
 				});
-			});
+			}).then(() => {
 
-			return transaction;
+			});
 		});
+
+		return def.promise;
 	},
-	patch: (id, status) => {
+	patch: (id, status, comments) => {
 		let def = q.defer();
 
 		mongoSvc.patchTransaction(id, status, comments).then((transaction) => {
+			console.log(transaction);
+
 			if (status === 'APPROVED') {
 				// update the account here
 				mongoSvc.getAccounts({

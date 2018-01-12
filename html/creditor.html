@@ -3,16 +3,28 @@
 	<head>
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
 		<link href="css/styles.css" rel="stylesheet">
 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+		<script src="js/creditor.js"></script>
 	</head>
 
 	<body>
 		<div class="nav">
 			<div class="container-fluid">
+				<div class="row" id="summary">
+					<span class="col-sm-6">Remaining:</span> <span class="col-sm-6">&pound;<b id="remaining"></b></span>
+					<span class="col-sm-6">Pending:</span> <span class="col-sm-6">&pound;<b id="pending"></b></span>
+					<span class="col-sm-6">Paid:</span> <span class="col-sm-6">&pound;<b id="paid"></b></span>
+				</div>
+
 				<div class="row">
+					<button class="col-sm-12 btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-expense">Add expense</button>
 				</div>
 			</div>
 		</div>
@@ -20,19 +32,108 @@
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
-					<h1>Who are you?</h1>
+					<h1>Transactions</h1>
 				</div>
 
-				<div class="row">
-					<div class="col-sm-4 col-md-3">
-						<button class="btn btn-primary">Steve &amp; Frances</button>
-					</div>
+				<div id="transactions">
+					<div class="row table-header">
+						<div class="col-sm-2">
+							Status
+						</div>
 
-					<div class="col-sm-4 col-md-3">
-						<button class="btn btn-primary">Chris &amp; Kevin</button>
+						<div class="col-sm-2">
+							Amount
+						</div>
+
+						<div class="col-sm-4">
+							Description
+						</div>
+
+						<div class="col-sm-4">
+							Status
+						</div>
+					</div>
+				</div>
+
+				<div id="transaction-example">
+					<div class="row transaction" style="line-height: 38px;">
+						<div class="col-sm-2 status">
+							<span></span>
+						</div>
+
+						<div class="col-sm-2">
+							&pound;<span class="amount"></span>
+						</div>
+
+						<div class="col-sm-4">
+							<span class="description"></span>
+						</div>
+
+						<div class="col-sm-3">
+							<div class="btn-group" role="group" aria-label="Basic example">
+								<button class="btn btn-success">Approve</button>
+								<button class="btn btn-danger">Reject</button>
+							</div>
+						</div>
+
+						<div class="col-sm-1">
+							<button class="btn btn-primary">
+								<span class="fa fa-image"></span>
+							</button>
+						</div>
+
+						<input type="hidden" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</body>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Add expense</h5>
+    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      					<span aria-hidden="true">&times;</span>
+    				</button>
+      			</div>
+      
+      			<div class="modal-body">
+      				<form>
+	        			<div class="row">
+	        				<div class="col-sm-12">
+	        					<div class="form-group">
+	        						<label>Description</label>
+	        						<input type="text" class="form-control" id="transaction-description" />
+	        					</div>
+
+	        					<div class="form-group">
+	        						<label>Date</label>
+	        						<input type="text" class="form-control" id="transaction-date" />
+	        					</div>
+
+	        					<div class="form-group">
+	        						<label>Amount</label>
+	        						<input type="text" class="form-control" id="transaction-amount" />
+	        					</div>
+
+	        					<div class="form-group">
+	        						<label>Receipt</label>
+	        						<input type="file" class="form-control" id="transaction-file" />
+	        					</div>
+	        				</div>
+	        			</div>
+        			</form>
+      			</div>
+      
+      			<div class="modal-footer">
+        			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        			<button type="button" class="btn btn-primary" id="submit">Submit expense</button>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+
+	<!-- JR8TQ -->
 </html>

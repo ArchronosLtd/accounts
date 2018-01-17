@@ -1,5 +1,5 @@
 const q = require('q'),
-	mailer = require('nodemailer'),
+	mailer = require('./mail'),
 	mongoSvc = require('./mongo');
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
 					def.resolve(transaction);
 				});
 			}).then(() => {
-
+				mailer.sendNewTransaction();
 			});
 		});
 
@@ -37,8 +37,6 @@ module.exports = {
 		let def = q.defer();
 
 		mongoSvc.patchTransaction(id, status, comments).then((transaction) => {
-			console.log(transaction);
-
 			if (status === 'APPROVED') {
 				// update the account here
 				mongoSvc.getAccounts({
@@ -77,6 +75,8 @@ module.exports = {
 					});
 				});
 			}
+
+			mailer.sendResult(status, transaction.amount);
 		});
 
 		return def.promise;

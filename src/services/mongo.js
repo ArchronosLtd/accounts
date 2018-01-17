@@ -73,7 +73,7 @@ module.exports = {
 	fetchTransactions: (query) => {
 		let def = q.defer();
 
-		Transaction.find(query, (err, transactions) => {
+		Transaction.find(query).select('-img').exec((err, transactions) => {
 			if (err) {
 				console.error(err);
 				def.reject(err);

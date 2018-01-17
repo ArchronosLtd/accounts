@@ -12,6 +12,7 @@ $(document).ready(function() {
 	}
 
 	function getTransactions() {
+		$('#loading').fadeIn();
 		$.ajax({
 			url: '/api/transactions/5a4bffa33a126f430073a1fd',
 			success: function(data) {
@@ -54,6 +55,7 @@ $(document).ready(function() {
 					});
 
 					$('#transactions').append(dom);
+					$('#overlay').fadeOut();
 				}
 			}
 		});
@@ -61,6 +63,26 @@ $(document).ready(function() {
 
 	updateSummary();
 	getTransactions();
+
+	$('#logout').click(function(e) {
+		$.ajax({
+				type: "GET",
+				url: "/myapp/logout",
+				async: false,
+				username: "logmeout",
+				password: "123456",
+				headers: {
+					"Authorization": "Basic xxx"
+				}
+			})
+			.done(function() {
+				// If we don't get an error, we actually got an error as we expect an 401!
+			})
+			.fail(function() {
+				// We expect to get an 401 Unauthorized error! In this case we are successfully 
+				// logged out and we redirect the user.
+			});
+	});
 
 	$('#submit').click(function(e) {
 		var formData = new FormData(),

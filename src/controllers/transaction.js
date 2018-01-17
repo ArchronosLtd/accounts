@@ -3,7 +3,7 @@ const transactionSvc = require('../services/transaction');
 module.exports = {
 	GET: (req, res) => {
 		transactionSvc.fetch(req.params.id).then((transactions) => {
-			res.send(transactions).end();
+			res.send(transactions.reverse()).end();
 		});
 	},
 	POST: (req, res) => {

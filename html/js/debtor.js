@@ -12,6 +12,8 @@ $(document).ready(function() {
 	}
 
 	function getTransactions() {
+		$('#overlay').fadeIn();
+
 		$.ajax({
 			url: '/api/transactions/5a4bffa33a126f430073a1fd',
 			success: function(data) {
@@ -31,12 +33,20 @@ $(document).ready(function() {
 
 					$('#transactions').append(dom);
 				}
+
+				$('#overlay').fadeOut();
 			}
 		});
 	}
 
 	updateSummary();
 	getTransactions();
+
+	$('#logout').click(function(e) {
+		$.ajax({
+			url: 'logout'
+		});
+	});
 
 	$('#submit').click(function(e) {
 		var formData = new FormData(),

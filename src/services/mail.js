@@ -1,6 +1,6 @@
 const q = require('q'),
 	mailer = require('nodemailer'),
-	_ = require('losdash'),
+	_ = require('lodash'),
 	transporter = mailer.createTransport({
 		host: 'smtp.office365.com', // Office 365 server
 		port: 587, // secure SMTP

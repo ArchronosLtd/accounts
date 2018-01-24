@@ -1,5 +1,6 @@
 const q = require('q'),
 	mailer = require('nodemailer'),
+	_ = require('losdash'),
 	transporter = mailer.createTransport({
 		host: 'smtp.office365.com', // Office 365 server
 		port: 587, // secure SMTP
@@ -41,26 +42,31 @@ module.exports = {
 		return def.promise;
 	},
 	sendNewTransaction: () => {
-		let def = q.defer();
+		let def = q.defer(),
+			err = false,
+			emails = [
+				'kevin305wright@btinternet.com',
+				'chris176wright@btinternet.com',
+				'steve.colemanwilliams@gmail.com'
+			];
 
-		console.log('sending');
-
-		transporter.sendMail({
-			from: '"Archronos account management" <debt-control@archronos.com>',
-			to: 'kevin305wright@btinternet.com,chris176wright@btinternet.com,steve.colemanwilliams@gmail.com',
-			subject: 'Steve and Frances have updated the account',
-			text: 'Hi Kevin and Chris,\r\nSteve and Frances have added another payment or reciept for you to approve.\r\nPaste the following into you browser to view.\r\nhttp://account.archronos.com/creditor.html',
-			html: `<p>Hi Kevin and Chris,</p>
+		_.forEach(emails, (email) => {
+			transporter.sendMail({
+				from: '"Archronos account management" <debt-control@archronos.com>',
+				to: email,
+				subject: 'Steve and Frances have updated the account',
+				text: 'Hi Kevin and Chris,\r\nSteve and Frances have added another payment or reciept for you to approve.\r\nPaste the following into you browser to view.\r\nhttp://account.archronos.com/creditor.html',
+				html: `<p>Hi Kevin and Chris,</p>
 						<p>Steve and Frances have added another payment or reciept for you to approve.</p>
 						<p><a href="http://account.archronos.com/creditor.html">Click here</a> to view the transaction.`
-		}, (err) => {
-			if (err) {
-				console.error(err);
-				def.reject(err);
-			}
-
-			def.resolve();
+			}, (error) => {
+				if (error) {
+					err = error;
+				}
+			});
 		});
+
+		def.resolve(true);
 
 		return def.promise;
 	}

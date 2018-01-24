@@ -62,6 +62,7 @@ module.exports = {
 			}, (error) => {
 				if (error) {
 					err = error;
+					console.error(error);
 				}
 			});
 		});

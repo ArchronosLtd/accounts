@@ -76,7 +76,7 @@ module.exports = {
 				});
 			}
 
-			mailer.sendResult(status, transaction.amount);
+			//mailer.sendResult(status, transaction.amount);
 		});
 
 		return def.promise;

@@ -12,7 +12,26 @@ $(document).ready(function() {
 	}
 
 	function getTransactions() {
-		$('#loading').fadeIn();
+		$('#overlay').fadeIn();
+
+		function patch(status, id) {
+			$('#overlay').fadeIn();
+
+                        var formData = new FormData(),
+                            xhr = new XMLHttpRequest();
+
+                        formData.append('status', status);
+                        formData.append('comments', '');
+
+                        xhr.open('PATCH', '/api/transaction/' + id, true);
+                        xhr.onload = function() {
+                            updateSummary();
+                            getTransactions();
+                        };
+
+                        xhr.send(formData);
+		}
+
 		$.ajax({
 			url: '/api/transactions/5a4bffa33a126f430073a1fd',
 			success: function(data) {
@@ -32,21 +51,17 @@ $(document).ready(function() {
 					dom.find('input').val(transaction._id);
 
 					dom.find('.btn-success').click(function(e) {
-						var id = $(this).parent().parent().parent().find('input').val(),
-							formData = new FormData(),
-							xhr = new XMLHttpRequest();;
-
-						formData.append('status', 'APPROVED');
-						formData.append('comments', '');
-
-						xhr.open('PATCH', '/api/transaction/' + id, true);
-						xhr.onload = function() {
-							updateSummary();
-							getTransactions();
-						};
-
-						xhr.send(formData);
+						patch('APPROVED', transaction._id);
 					});
+
+					dom.find('.btn-danger').click(function(e) {
+						patch('REJECTED', transaction._id);
+					});
+
+					if(transaction.status.toLowerCase() === 'approved') {
+						dom.find('.btn-success').remove();
+						dom.find('.btn-danger').remove();
+					}
 
 					dom.find('.btn-primary').click(function(e) {
 						var id = $(this).parent().parent().find('input').val();
